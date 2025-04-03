@@ -14,7 +14,7 @@
 
     const isLoading = ref(false);
 
-    function createAccount() {
+    function loginAccount() {
         isLoading.value = true;
         fetch("http://localhost:3000/auth/register", {
             method: "POST",
@@ -61,6 +61,7 @@
                 />
                 <button type="submit" :disabled="!boolean || isLoading">Connexion</button>
             </form>
+            <p>Pas encore de compte ? <a href="#">Je m'inscris</a></p>
         </div>
     </main>
 </template>
@@ -68,7 +69,7 @@
 <style scoped>
     input {
         background: var(--color-bg-tertiary);
-        border: none;
+        border: solid gray;
         border-radius: 10px;
         color: var(--color-text-primary);
         outline: none;
