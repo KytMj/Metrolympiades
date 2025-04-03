@@ -1,35 +1,18 @@
-# Metrolympiades
+# Metroympiades
+## Projet JavaScript
+### Contexte
+Metrolympiades est une entreprise qui propose des services d’organisation de team building
+en entreprise orientés sur le sport. Jusqu’à présent, ils utilisaient des tableaux Excel et du
+papier/crayon afin de reporter les scores, organiser les matchs et afficher les classements.
+Cette année, ils décident de se doter d’une application pour gérer la journée. Votre mission :
+les aider !
+## Contributeurs
 
-This template should help get you started developing with Vue 3 in Vite.
+Cassandre Yon-Tailleux, TP1.2, 2A
 
-## Recommended IDE Setup
+Maëlys Joret, TP1.2, 2A
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+Mathias Cherrier, TP1.2 2A
 
-## Customize configuration
+Jonas Le Duff, TP1.2 2A 
 
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
