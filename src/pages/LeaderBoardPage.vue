@@ -17,21 +17,25 @@ const isLoading = ref(false);
         .then((response) => response.json())
         .then((data) => {
             ranking.value = data;
-            console.log(data);
+            console.log(data);                         // should be removed
             isLoading.value = false;
-            if (ranking.value.length === 0) {
-                // Should be removed when the API is available
-              ranking.value = [
-                { "team": "Team Alpha", "points": 9 },
-                { "team": "Team Beta", "points": 6 },
-                { "team": "Team Gamma", "points": 3 }
-              ]
-            }
+
         });
     }
 
 
     fetchRanking();
+
+    function putFlaseRank() {
+        if (ranking.value.length === 0) {
+            // Should be removed when the API is available
+          ranking.value = [
+            { "team": "Team Alpha", "points": 9 },
+            { "team": "Team Beta", "points": 6 },
+            { "team": "Team Gamma", "points": 3 }
+          ]
+        }
+    }
 
 
 </script>
@@ -56,6 +60,12 @@ const isLoading = ref(false);
 
                 </div>
             </div>
+        </div>
+        <div v-if="ranking.length === 0" class="centerer">
+            <button @click="putFlaseRank">Mettre des données lambda</button> <!-- Should be removed when the API is available -->
+        </div>
+        <div>
+          <button @click="fetchRanking">Rafraichir le classement</button>
         </div>
     </main>
 </template>
@@ -96,5 +106,19 @@ const isLoading = ref(false);
     align-self: left;
     width: 75%;
     margin-left: 25%;
+  }
+  button {
+    background-color: lightgray;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 20px;
+  }
+  button:hover {
+    background-color: gray;
+    color: white;
   }
 </style>
