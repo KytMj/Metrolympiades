@@ -1,31 +1,30 @@
 <script setup>
-import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
-
-const isConnected = computed(() => {
-  const user = JSON.parse(localStorage.getItem("user"));
-  return user !== null;
-});
+import { ref } from "vue";
 
 const router = useRouter();
 
 function logout() {
   localStorage.removeItem("user");
-  localStorage.setItem("user", null);
-  isConnected.value = false;
-  router.push("/register");
+  router.push("/register").then(() => {
+    location.reload();
+  });
 }
 
 function sendToHome() {
   router.push("/");
 }
 
+const user = JSON.parse(localStorage.getItem("user"));
+
 const teamName = ref(null);
 
-const user = JSON.parse(localStorage.getItem("user"));
-if (user !== null) {
+if (user !== null && user !== undefined) {
   teamName.value = user.team.name;
 }
+
+const isConnected = user !== null && user !== undefined;
+
 </script>
 
 <template>
@@ -33,7 +32,7 @@ if (user !== null) {
   <div class="navbar">
     <div @click="sendToHome">Metrolympiades</div>
 
-    <div v-if="teamName !== null && isConnected" class="teamName">{{ teamName }}</div>
+    <div v-if="teamName !== null && teamName.value !== null && isConnected" class="teamName">{{ teamName }}</div>
     <ul>
       <li><router-link to="/">Classement général</router-link></li>
       <li v-if="isConnected"><router-link to="/team">Mon équipe</router-link></li>

@@ -44,7 +44,9 @@ function createAccount() {
       console.log(data)
       localStorage.setItem('user', JSON.stringify(data))
       console.log('user', JSON.parse(localStorage.getItem('user')))
-      router.push('leaderboard')
+      router.push('leaderboard').then(() => {
+        location.reload()
+      })
       isLoading.value = false
     })
 }
