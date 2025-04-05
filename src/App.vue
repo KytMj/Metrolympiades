@@ -1,18 +1,26 @@
 <script setup>
-import { computed } from "vue";
-import { useRoute } from "vue-router";
 import SideNavbar from "./components/SideNavbar.vue";
+import { computed } from "vue";
+import { RouterView, useRouter } from "vue-router";
 
-const route = useRoute();
+const router = useRouter();
+
+const showNavbar = computed(() => {
+  const routeName = router.currentRoute.value.name;
+  return !["LoginPage", "RegisterPage"].includes(routeName);
+});
+
+const user = JSON.parse(localStorage.getItem("user"));
+if (user === null) {
+  router.push("/login");
+}
 
 
-
-const showNavbar = computed(() => ["login", "register"].includes(route.path));
 </script>
 
 <template>
   <main>
-    <SideNavbar /> <!-- Sould we do different navbars if the user is disconnected ? -->
+    <SideNavbar v-if="showNavbar"/>
     <RouterView />
   </main>
 </template>

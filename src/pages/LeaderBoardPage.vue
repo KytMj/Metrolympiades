@@ -5,37 +5,26 @@ const ranking = ref([]);
 
 
 const isLoading = ref(false);
-  function fetchRanking() {
-        isLoading.value = true;
-        fetch("http://localhost:3000/ranking", {
-            method: "GET",
-            headers: {
-            "Content-Type": "application/json",
-            "Authorization":  "Bearer jwt_token",
-            }
-        })
-        .then((response) => response.json())
-        .then((data) => {
-            ranking.value = data;
-            console.log(data);                         // should be removed
-            isLoading.value = false;
 
-        });
-    }
+function fetchRanking() {
+    isLoading.value = true;
+    fetch("http://localhost:3000/ranking", {
+        method: "GET",
+        headers: {
+        "Content-Type": "application/json",
+        "Authorization":  "Bearer jwt_token",
+        }
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        ranking.value = data;
+        isLoading.value = false;
+
+    });
+}
 
 
     fetchRanking();
-
-    function putFlaseRank() {
-        if (ranking.value.length === 0) {
-            // Should be removed when the API is available
-          ranking.value = [
-            { "team": "Team Alpha", "points": 9 },
-            { "team": "Team Beta", "points": 6 },
-            { "team": "Team Gamma", "points": 3 }
-          ]
-        }
-    }
 
 
 </script>
@@ -60,9 +49,6 @@ const isLoading = ref(false);
 
                 </div>
             </div>
-        </div>
-        <div v-if="ranking.length === 0" class="centerer">
-            <button @click="putFlaseRank">Mettre des données lambda</button> <!-- Should be removed when the API is available -->
         </div>
         <div>
           <button @click="fetchRanking">Rafraichir le classement</button>
