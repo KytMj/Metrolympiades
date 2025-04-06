@@ -14,13 +14,13 @@
 
     const isLoading = ref(false);
 
-    function createAccount() {
+    function login() {
         isLoading.value = true;
-        fetch("http://localhost:3000/auth/register", {
+        fetch("http://localhost:3000/auth/login", {
             method: "POST",
             headers: {
-            "Content-Type": "application/json",
-            "Authorization":  "Bearer jwt_token",
+                "Content-Type": "application/json",
+                Authorization: "Bearer jwt_token",
             },
             body: JSON.stringify({
                 email: email.value,
@@ -31,16 +31,20 @@
         .then((data) => {
             console.log(data);
             localStorage.setItem("user", JSON.stringify(data));
-            router.push("leaderboard");
+            console.log("user", JSON.parse(localStorage.getItem("user")));
+            router.push("leaderboard").then(() => {
+                location.reload();
+            });
+            isLoading.value = false;
         });
     }
 </script>
 
 <template>
-    <main>
+  <main>
+      <h1>Connexion</h1>
         <div class="container">
-            <form class="card" @submit.prevent="">
-                <h1 style="margin-bottom: 1rem">Connexion</h1>
+            <form class="card" @submit.prevent="login">
                 <input
                 type="email"
                 id="email"
@@ -60,23 +64,20 @@
                 v-model="password"
                 />
                 <button type="submit" :disabled="!boolean || isLoading">Connexion</button>
+                <p>Pas encore de compte ?
+                  <router-link to="/register">
+                    Je m'inscris
+                  </router-link>
+                </p>
             </form>
         </div>
     </main>
 </template>
 
 <style scoped>
-    input {
-        background: var(--color-bg-tertiary);
-        border: none;
-        border-radius: 10px;
-        color: var(--color-text-primary);
-        outline: none;
-        padding: 1rem;
-        margin-bottom: 1rem;
-    }
-    button {
-        width: 100%;
-    }
+  h1 {
+    text-align: center;
+    margin-top: 5rem;
+    margin-bottom: 3rem;
+  }
 </style>
-  
