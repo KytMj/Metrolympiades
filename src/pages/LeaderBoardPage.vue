@@ -35,6 +35,9 @@ function fetchRanking() {
             <h1>Classement général</h1>
         </div>
         <div>
+          <div class="centerer">
+            <button @click="fetchRanking" :disabeled="isLoading">Rafraichir le classement</button>
+          </div>
             <div v-if="isLoading">
                 <p>Loading...</p>
             </div>
@@ -50,9 +53,7 @@ function fetchRanking() {
                 </div>
             </div>
         </div>
-        <div>
-          <button @click="fetchRanking">Rafraichir le classement</button>
-        </div>
+
     </main>
 </template>
 

@@ -1,4 +1,7 @@
 <script setup>
+// icons
+import { ArrowLeftEndOnRectangleIcon, ArrowRightStartOnRectangleIcon, UserGroupIcon, TrophyIcon, PlusCircleIcon, RocketLaunchIcon } from "@heroicons/vue/24/outline";
+
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 
@@ -10,6 +13,15 @@ function logout() {
     location.reload();
   });
 }
+
+function login(){
+  router.push("/login");
+}
+
+function register(){
+  router.push("/register");
+}
+
 
 function sendToHome() {
   router.push("/");
@@ -28,19 +40,18 @@ const isConnected = user !== null && user !== undefined;
 </script>
 
 <template>
-
   <div class="navbar">
-    <div @click="sendToHome">Metrolympiades</div>
+    <div class="brandName" @click="sendToHome">Metrolympiades</div>
 
     <div v-if="teamName !== null && teamName.value !== null && isConnected" class="teamName">{{ teamName }}</div>
     <ul>
-      <li><router-link to="/">Classement général</router-link></li>
-      <li v-if="isConnected"><router-link to="/team">Mon équipe</router-link></li>
-      <li v-if="isConnected"><router-link to="/games">Mes matchs</router-link></li>
-      <li v-if="isConnected"><button @click="logout">Se déconnecter</button></li>
+      <li><router-link to="/" class="linkWithIcon"><TrophyIcon class="icon"/>Classement général</router-link></li>
+      <li v-if="isConnected"><router-link to="/team" class="linkWithIcon"><UserGroupIcon class="icon"/>Mon équipe</router-link></li>
+      <li v-if="isConnected"><router-link to="/games" class="linkWithIcon"><RocketLaunchIcon class="icon"/>Mes matchs</router-link></li>
+      <li v-if="isConnected"><button @click="logout"><ArrowRightStartOnRectangleIcon class="icon"/>Se déconnecter</button></li>
 
-      <li v-if="!isConnected"><router-link to="/login">Se Connecter</router-link></li>
-      <li v-if="!isConnected"><router-link to="/register">Créer une équipe</router-link></li>
+      <li v-if="!isConnected"><button @click="register"><PlusCircleIcon class="icon"/>Créer une équipe</button></li>
+      <li v-if="!isConnected"><button @click="login"><ArrowLeftEndOnRectangleIcon class="icon"/>Se connecter</button></li>
     </ul>
   </div>
 </template>
@@ -48,11 +59,33 @@ const isConnected = user !== null && user !== undefined;
 
 
 <style scoped>
-.teamName {
-  margin: 10px;
-  font-size: 24px;
+button{
+  width: 100%;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+.linkWithIcon {
+  display: flex;
+  align-items: center;
+  direction: row;
+  align-content: center;
+  justify-content: space-between;
+
+}
+.brandName {
+  font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 20px;
+  cursor: pointer;
+}
+.teamName {
+  margin: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
 .navbar {
@@ -75,6 +108,7 @@ const isConnected = user !== null && user !== undefined;
 
 .navbar li {
   margin: 15px 0;
+  display: flex;
 }
 
 .navbar a {
@@ -86,4 +120,5 @@ const isConnected = user !== null && user !== undefined;
 .navbar a:hover {
   text-decoration: underline;
 }
+
 </style>
