@@ -7,6 +7,14 @@
   margin-top: 60px;
 }
 
+.clickable {
+  cursor: pointer;
+}
+
+* {
+  user-select: none;
+}
+
 button{
   display: flex;
   flex-direction: row;

@@ -36,7 +36,7 @@ function fetchRanking() {
         </div>
         <div>
           <div class="centerer">
-            <button @click="fetchRanking" :disabeled="isLoading">Rafraichir le classement</button>
+            <button :disabled=isLoading @click="fetchRanking">Rafraichir le classement</button>
           </div>
             <div v-if="isLoading">
                 <p>Loading...</p>
@@ -93,19 +93,5 @@ function fetchRanking() {
     align-self: left;
     width: 75%;
     margin-left: 25%;
-  }
-  button {
-    background-color: lightgray;
-    color: black;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 1rem;
-    margin-top: 20px;
-  }
-  button:hover {
-    background-color: gray;
-    color: white;
   }
 </style>

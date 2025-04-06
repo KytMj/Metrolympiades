@@ -27,6 +27,10 @@ function sendToHome() {
   router.push("/");
 }
 
+function sendToTeam() {
+  router.push("/team");
+}
+
 const user = JSON.parse(localStorage.getItem("user"));
 
 const teamName = ref(null);
@@ -41,9 +45,9 @@ const isConnected = user !== null && user !== undefined;
 
 <template>
   <div class="navbar">
-    <div class="brandName" @click="sendToHome">Metrolympiades</div>
+    <div class="brandName clickable" @click="sendToHome">Metrolympiades</div>
 
-    <div v-if="teamName !== null && teamName.value !== null && isConnected" class="teamName">{{ teamName }}</div>
+    <div v-if="teamName !== null && teamName.value !== null && isConnected" class="teamName clickable" v-on:click="sendToTeam">{{ teamName }}</div>
     <ul>
       <li><router-link to="/" class="linkWithIcon"><TrophyIcon class="icon"/>Classement général</router-link></li>
       <li v-if="isConnected"><router-link to="/team" class="linkWithIcon"><UserGroupIcon class="icon"/>Mon équipe</router-link></li>
@@ -80,8 +84,8 @@ button{
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 20px;
-  cursor: pointer;
 }
+
 .teamName {
   margin: 10px;
   font-size: 1.2rem;
