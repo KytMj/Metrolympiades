@@ -9,7 +9,7 @@
     const password = ref("");
 
     const boolean = computed(() => {
-    return !!email.value.trim() && !!password.value.trim();
+      return !!email.value.trim() && !!password.value.trim();
     });
 
     const isLoading = ref(false);
