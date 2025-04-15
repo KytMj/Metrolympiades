@@ -14,7 +14,7 @@
 
     const isLoading = ref(false);
 
-    function createAccount() {
+    function logIn() {
         isLoading.value = true;
         fetch("http://localhost:3000/auth/register", {
             method: "POST",
@@ -37,32 +37,32 @@
 </script>
 
 <template>
-    <main>
-        <div class="container">
-            <form class="card" @submit.prevent="">
-                <h1 style="margin-bottom: 1rem">Connexion</h1>
-                <input
-                type="email"
-                id="email"
-                name="email"
-                autocomplete="email"
-                placeholder="Adresse email"
-                required
-                v-model="email"
-                />
-                <input
-                type="password"
-                id="password"
-                name="password"
-                autocomplete="new-password"
-                placeholder="Mot de passe"
-                required
-                v-model="password"
-                />
-                <button type="submit" :disabled="!boolean || isLoading">Connexion</button>
-            </form>
-        </div>
-    </main>
+  <main>
+    <div class="container">
+        <form class="card" @submit.prevent="logIn">
+          <h1 style="margin-bottom: 1rem">Connexion</h1>
+          <input
+          type="email"
+          id="email"
+          name="email"
+          autocomplete="email"
+          placeholder="Adresse email"
+          required
+          v-model="email"
+          />
+          <input
+          type="password"
+          id="password"
+          name="password"
+          autocomplete="new-password"
+          placeholder="Mot de passe"
+          required
+          v-model="password"
+          />
+          <button type="submit" :disabled="!boolean || isLoading">Connexion</button>
+        </form>
+    </div>
+  </main>
 </template>
 
 <style scoped>
@@ -79,4 +79,3 @@
         width: 100%;
     }
 </style>
-  
