@@ -16,7 +16,7 @@
 
     function logIn() {
         isLoading.value = true;
-        fetch("http://localhost:3000/auth/register", {
+        fetch("http://localhost:3000/auth/login", {
             method: "POST",
             headers: {
             "Content-Type": "application/json",
@@ -31,7 +31,9 @@
         .then((data) => {
             console.log(data);
             localStorage.setItem("user", JSON.stringify(data));
-            router.push("leaderboard");
+            router.push('leaderboard').then(() => {
+              location.reload()
+            })
         });
     }
 </script>
