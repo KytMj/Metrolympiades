@@ -14,7 +14,7 @@
 
     const isLoading = ref(false);
 
-    function login() {
+    function logIn() {
         isLoading.value = true;
         fetch("http://localhost:3000/auth/login", {
             method: "POST",
@@ -40,36 +40,31 @@
 
 <template>
   <main>
-      <h1>Connexion</h1>
-        <div class="container">
-            <form class="card" @submit.prevent="login">
-                <input
-                type="email"
-                id="email"
-                name="email"
-                autocomplete="email"
-                placeholder="Adresse email"
-                required
-                v-model="email"
-                />
-                <input
-                type="password"
-                id="password"
-                name="password"
-                autocomplete="new-password"
-                placeholder="Mot de passe"
-                required
-                v-model="password"
-                />
-                <button type="submit" :disabled="!boolean || isLoading">Connexion</button>
-                <p>Pas encore de compte ?
-                  <router-link to="/register">
-                    Je m'inscris
-                  </router-link>
-                </p>
-            </form>
-        </div>
-    </main>
+    <div class="container">
+        <form class="card" @submit.prevent="logIn">
+          <h1 style="margin-bottom: 1rem">Connexion</h1>
+          <input
+          type="email"
+          id="email"
+          name="email"
+          autocomplete="email"
+          placeholder="Adresse email"
+          required
+          v-model="email"
+          />
+          <input
+          type="password"
+          id="password"
+          name="password"
+          autocomplete="new-password"
+          placeholder="Mot de passe"
+          required
+          v-model="password"
+          />
+          <button type="submit" :disabled="!boolean || isLoading">Connexion</button>
+        </form>
+    </div>
+  </main>
 </template>
 
 <style scoped>
