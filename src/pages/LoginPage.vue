@@ -29,9 +29,7 @@
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log(data);
             localStorage.setItem("user", JSON.stringify(data));
-            console.log("user", JSON.parse(localStorage.getItem("user")));
             router.push("leaderboard").then(() => {
                 location.reload();
             });

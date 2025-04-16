@@ -9,6 +9,7 @@ const router = useRouter();
 
 function logout() {
   localStorage.removeItem("user");
+  localStorage.setItem("user", null);
   router.push("/register").then(() => {
     location.reload();
   });
@@ -30,9 +31,10 @@ function sendToHome() {
 function sendToTeam() {
   router.push("/team");
 }
-
-const user = JSON.parse(localStorage.getItem("user"));
-
+let user = null;
+if (localStorage.getItem("user") !== null) {
+  user = JSON.parse(localStorage.getItem("user"));
+}
 const teamName = ref(null);
 
 if (user !== null && user !== undefined) {

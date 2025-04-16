@@ -7,13 +7,10 @@ const ranking = ref([]);
 const isLoading = ref(false);
 
 function fetchRanking() {
+  console.log(localStorage.getItem("user"));
     isLoading.value = true;
     fetch("http://localhost:3000/ranking", {
-        method: "GET",
-        headers: {
-        "Content-Type": "application/json",
-        "Authorization":  "Bearer jwt_token",
-        }
+        method: "GET"
     })
     .then((response) => response.json())
     .then((data) => {
