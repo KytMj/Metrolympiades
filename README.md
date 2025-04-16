@@ -16,3 +16,5 @@ Mathias Cherrier, TP1.2 2A
 
 Jonas Le Duff, TP1.2 2A 
 
+Raphaël Bornet--Indersie, TP1.2 2A
+
