@@ -28,6 +28,10 @@ function createAccount() {
   }
   fetch('http://localhost:3000/auth/register', {
     method: 'POST',
+    headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer jwt_token",
+            },
     body: JSON.stringify({
       email: email.value,
       username: username.value,

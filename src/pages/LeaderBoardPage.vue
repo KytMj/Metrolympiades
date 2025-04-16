@@ -7,7 +7,6 @@ const ranking = ref([]);
 const isLoading = ref(false);
 
 function fetchRanking() {
-  console.log(localStorage.getItem("user"));
     isLoading.value = true;
     fetch("http://localhost:3000/ranking", {
         method: "GET"
@@ -16,13 +15,9 @@ function fetchRanking() {
     .then((data) => {
         ranking.value = data;
         isLoading.value = false;
-
     });
 }
-
-
     fetchRanking();
-
 
 </script>
 
@@ -46,7 +41,6 @@ function fetchRanking() {
                     <p>{{ i }}</p>
                     <p class="teamName">{{ ranking[i-1].team }}</p>
                     <p class="">{{ ranking[i-1].points }}pts</p>
-
                 </div>
             </div>
         </div>
