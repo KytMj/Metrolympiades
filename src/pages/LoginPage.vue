@@ -19,8 +19,8 @@
         fetch("http://localhost:3000/auth/login", {
             method: "POST",
             headers: {
-            "Content-Type": "application/json",
-            "Authorization":  "Bearer jwt_token",
+                "Content-Type": "application/json",
+                Authorization: "Bearer jwt_token",
             },
             body: JSON.stringify({
                 email: email.value,
@@ -29,11 +29,11 @@
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log(data);
             localStorage.setItem("user", JSON.stringify(data));
-            router.push('leaderboard').then(() => {
-              location.reload()
-            })
+            router.push("leaderboard").then(() => {
+                location.reload();
+            });
+            isLoading.value = false;
         });
     }
 </script>
@@ -62,22 +62,22 @@
           v-model="password"
           />
           <button type="submit" :disabled="!boolean || isLoading">Connexion</button>
+            <p>Pas encore de compte ?
+            <router-link to="/register">
+              Je m'inscris
+            </router-link>
+          </p>
         </form>
+
+
     </div>
   </main>
 </template>
 
 <style scoped>
-    input {
-        background: var(--color-bg-tertiary);
-        border: none;
-        border-radius: 10px;
-        color: var(--color-text-primary);
-        outline: none;
-        padding: 1rem;
-        margin-bottom: 1rem;
-    }
-    button {
-        width: 100%;
-    }
+  h1 {
+    text-align: center;
+    margin-top: 5rem;
+    margin-bottom: 3rem;
+  }
 </style>

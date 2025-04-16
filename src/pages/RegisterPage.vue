@@ -28,10 +28,6 @@ function createAccount() {
   }
   fetch('http://localhost:3000/auth/register', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer jwt_token',
-    },
     body: JSON.stringify({
       email: email.value,
       username: username.value,
@@ -117,41 +113,5 @@ function createAccount() {
 </template>
 
 <style scoped>
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-  form {
-    display: flex;
-    flex-direction: column;
-    width: 33%;
-    margin-top: 20px;
-  }
-  input {
-    border: 1px solid rgba(0,0,0, 0.5);
-    border-radius: 10px;
-    color: black;
-    padding: 1rem;
-    margin-bottom: 1rem;
-  }
-  button{
-    background-color: lightgray;
-    color: black;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 1rem;
-    margin-top: 20px;
-  }
-  button:hover {
-    background-color: gray;
-    color: white;
-  }
-  button:disabled {
-    background-color: lightgray;
-    color: white;
-    cursor: not-allowed;
-  }
+
 </style>

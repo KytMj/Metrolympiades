@@ -7,13 +7,10 @@ const ranking = ref([]);
 const isLoading = ref(false);
 
 function fetchRanking() {
+  console.log(localStorage.getItem("user"));
     isLoading.value = true;
     fetch("http://localhost:3000/ranking", {
-        method: "GET",
-        headers: {
-        "Content-Type": "application/json",
-        "Authorization":  "Bearer jwt_token",
-        }
+        method: "GET"
     })
     .then((response) => response.json())
     .then((data) => {
@@ -35,6 +32,9 @@ function fetchRanking() {
             <h1>Classement général</h1>
         </div>
         <div>
+          <div class="centerer">
+            <button :disabled=isLoading @click="fetchRanking">Rafraichir le classement</button>
+          </div>
             <div v-if="isLoading">
                 <p>Loading...</p>
             </div>
@@ -50,9 +50,7 @@ function fetchRanking() {
                 </div>
             </div>
         </div>
-        <div>
-          <button @click="fetchRanking">Rafraichir le classement</button>
-        </div>
+
     </main>
 </template>
 
@@ -92,19 +90,5 @@ function fetchRanking() {
     align-self: left;
     width: 75%;
     margin-left: 25%;
-  }
-  button {
-    background-color: lightgray;
-    color: black;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 1rem;
-    margin-top: 20px;
-  }
-  button:hover {
-    background-color: gray;
-    color: white;
   }
 </style>
