@@ -62,7 +62,14 @@
           v-model="password"
           />
           <button type="submit" :disabled="!boolean || isLoading">Connexion</button>
+            <p>Pas encore de compte ?
+            <router-link to="/register">
+              Je m'inscris
+            </router-link>
+          </p>
         </form>
+
+
     </div>
   </main>
 </template>
