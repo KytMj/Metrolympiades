@@ -70,7 +70,7 @@ function removeMatch() {
   display: flex;
   justify-content: start;
   width: 100%;
-  height: 100%;
+  height: 20px;
   flex-direction: row;
   align-content: center;
 }
@@ -95,6 +95,13 @@ function removeMatch() {
   width: 24%;
 }
 
+.card:hover .suppButt {
+  display: flex;
+}
+
+.suppButt {
+  display: none;
+}
 .winner {
   font-weight: bold;
 }
