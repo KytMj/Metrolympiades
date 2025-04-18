@@ -23,11 +23,47 @@ function fetchMatches(){
     .then((response) => response.json())
     .then((data) => {
         matches.value = data;
-        console.log("matches.value = ",matches.value.at(0).activity);
         isLoading.value = false;
     });
 }
 fetchMatches();
+
+function sortByDate(a, b) {
+  return new Date(b.startedAt) - new Date(a.startedAt);
+}
+
+function highestScore(a) {
+  return a.team1Score > a.team2Score ? a.team1Score : a.team2Score;
+}
+
+function lowestScore(a) {
+  return a.team1Score < a.team2Score ? a.team1Score : a.team2Score;
+}
+
+function sortMatches(event) {
+  console.log("sortMatches",event.target.value);
+
+  switch (event.target.value) {
+    case 'date':
+      matches.value.sort(sortByDate);
+      break;
+    case 'activity':
+      matches.value.sort((a, b) => a.activity.localeCompare(b.activity));
+      break;
+    case 'team':
+      matches.value.sort((a, b) => a.team.localeCompare(b.team));
+      break;
+    case 'highestScore':
+      matches.value.sort((a, b) => highestScore(b) - highestScore(a));
+      break;
+    case 'lowestScore':
+      matches.value.sort((a, b) => lowestScore(a) - lowestScore(b));
+      break;
+    default:
+
+      break;
+  }
+}
 
 
 </script>
@@ -35,13 +71,21 @@ fetchMatches();
 <template>
   <main>
     <div class="header">
-      <h1>Mes matches</h1>
+      <h1>Mes matchs</h1>
       <div class="container">
         <button @click="pushToAddGamePage">Ajouter un match</button>
       </div>
     </div>
     <div>
-      <h1>c'est les matches</h1>
+      <h1>c'est les matchs</h1>
+      <select @change="sortMatches($event)">
+        <option :selected="true" disabled>sortBy</option>
+        <option value="date">Date</option>
+        <option value="activity">Activité</option>
+        <option value="team">Équipe</option>
+        <option value="highestScore">Plus grand score</option>
+        <option value="lowestScore">Plus petit score</option>
+      </select>
       <div v-if="isLoading">
           <p>Chargement...</p>
       </div>
@@ -50,7 +94,6 @@ fetchMatches();
       </div>
       <div v-else class="centerer">
           <MatchCard v-for="match in matches" :key="match.id" :match = "match" class="card"/>
-
       </div>
     </div>
   </main>
@@ -70,5 +113,11 @@ main{
 }
 button{
   margin-right: 200px;
+}
+.centerer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 </style>
