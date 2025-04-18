@@ -92,7 +92,7 @@ function sortMatches(event) {
       <div v-else-if="matches.length === 0">
         <p>Aucun classement disponible.</p>
       </div>
-      <div v-else class="centerer">
+      <div v-else class="container">
         <MatchCard v-for="match in matches" :key="match.id" :match="match" class="card" />
       </div>
     </div>
@@ -100,6 +100,9 @@ function sortMatches(event) {
 </template>
 
 <style scoped>
+.container{
+  flex-direction: column;
+}
 select{
   width: 10%;
 }

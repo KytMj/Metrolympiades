@@ -32,7 +32,7 @@ function fetchRanking() {
             <h1>Classement général</h1>
         </div>
         <div>
-          <div class="centerer">
+          <div class="container">
             <button :disabled=isLoading @click="fetchRanking">Rafraichir le classement</button>
           </div>
             <div v-if="isLoading">
@@ -41,8 +41,8 @@ function fetchRanking() {
             <div v-else-if="ranking.length === 0">
                 <p>Aucun classement disponible.</p>
             </div>
-            <div v-else class="centerer">
-                <div v-for="(i) in ranking.length" :key="i" class="card">
+            <div v-else class="container">
+                <div v-for="(i) in ranking.length" :key="i" class="card container">
                     <p>{{ i }}</p>
                     <p class="teamName">{{ ranking[i-1].team }}</p>
                     <p class="">{{ ranking[i-1].points }}pts</p>
@@ -55,8 +55,9 @@ function fetchRanking() {
 </template>
 
 <style scoped>
-  .centerer {
+  .container {
       margin-top: 20px;
+      flex-direction: column;
     }
   .card {
     background-color: #fff;
@@ -71,9 +72,6 @@ function fetchRanking() {
     width: 33%;
   }
   .card p {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     padding: 0;
     margin: 0;
     font-size: 1.2rem;

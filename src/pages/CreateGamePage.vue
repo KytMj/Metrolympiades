@@ -249,11 +249,6 @@ input[type="number"]{
   align-self: center;
 }
 
-select{
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  border: 1px solid #ccc;
-  width: 75%;
-}
+
 
 </style>
