@@ -23,11 +23,14 @@ function createAccount() {
 
   isLoading.value = true
   if (password.value !== confirmPassword.value) {
-    alert('Les mots de passe ne correspondent pas')
-    return
+    alert('Les mots de passe ne correspondent pas');
+    return;
   }
   fetch('http://localhost:3000/auth/register', {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify({
       email: email.value,
       username: username.value,
@@ -37,9 +40,7 @@ function createAccount() {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data)
       localStorage.setItem('user', JSON.stringify(data))
-      console.log('user', JSON.parse(localStorage.getItem('user')))
       router.push('leaderboard').then(() => {
         location.reload()
       })

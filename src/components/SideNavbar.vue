@@ -38,7 +38,7 @@ if (localStorage.getItem("user") !== null) {
 const teamName = ref(null);
 
 if (user !== null && user !== undefined) {
-  teamName.value = user.team.name;
+  teamName.value = user?.team?.name;
 }
 
 const isConnected = user !== null && user !== undefined;
@@ -49,7 +49,7 @@ const isConnected = user !== null && user !== undefined;
   <div class="navbar">
     <div class="brandName clickable" @click="sendToHome">Metrolympiades</div>
 
-    <div v-if="teamName !== null && teamName.value !== null && isConnected" class="teamName clickable" v-on:click="sendToTeam">{{ teamName }}</div>
+    <div v-if="teamName !== null && teamName !== undefined && isConnected" class="teamName clickable" v-on:click="sendToTeam">{{ teamName }}</div>
     <ul>
       <li><router-link to="/" class="linkWithIcon"><TrophyIcon class="icon"/>Classement général</router-link></li>
       <li v-if="isConnected"><router-link to="/team" class="linkWithIcon"><UserGroupIcon class="icon"/>Mon équipe</router-link></li>

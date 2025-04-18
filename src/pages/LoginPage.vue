@@ -20,7 +20,6 @@
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: "Bearer jwt_token",
             },
             body: JSON.stringify({
                 email: email.value,
@@ -29,6 +28,13 @@
         })
         .then((response) => response.json())
         .then((data) => {
+            if (data.message === "Invalid email or password") {
+                password.value = "";
+                alert("email ou mot de passe incorrect");
+                isLoading.value = false;
+                return;
+            }
+
             localStorage.setItem("user", JSON.stringify(data));
             router.push("leaderboard").then(() => {
                 location.reload();
