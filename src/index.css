@@ -15,7 +15,7 @@
   user-select: none;
 }
 
-button{
+button {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -51,18 +51,18 @@ form {
   margin-top: 20px;
 }
 input {
-  border: 1px solid rgba(0,0,0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.5);
   border-radius: 10px;
   color: black;
   padding: 1rem;
   margin-bottom: 1rem;
 }
 
-.icon{
+.icon {
   width: 20px;
   height: 20px;
 }
-select{
+select {
   padding: 0.5rem;
   border-radius: 0.5rem;
   border: 1px solid #ccc;

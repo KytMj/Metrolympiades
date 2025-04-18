@@ -1,71 +1,100 @@
 <script setup>
 // icons
-import { ArrowLeftEndOnRectangleIcon, ArrowRightStartOnRectangleIcon, UserGroupIcon, TrophyIcon, PlusCircleIcon, RocketLaunchIcon } from "@heroicons/vue/24/outline";
+import {
+  ArrowLeftEndOnRectangleIcon,
+  ArrowRightStartOnRectangleIcon,
+  UserGroupIcon,
+  TrophyIcon,
+  PlusCircleIcon,
+  RocketLaunchIcon,
+} from '@heroicons/vue/24/outline'
 
-import { useRouter } from "vue-router";
-import { ref } from "vue";
+import { useRouter } from 'vue-router'
+import { ref } from 'vue'
 
-const router = useRouter();
+const router = useRouter()
 
 function logout() {
-  localStorage.removeItem("user");
-  localStorage.setItem("user", null);
-  router.push("/register").then(() => {
-    location.reload();
-  });
+  localStorage.removeItem('user')
+  localStorage.setItem('user', null)
+  router.push('/register').then(() => {
+    location.reload()
+  })
 }
 
-function login(){
-  router.push("/login");
+function login() {
+  router.push('/login')
 }
 
-function register(){
-  router.push("/register");
+function register() {
+  router.push('/register')
 }
-
 
 function sendToHome() {
-  router.push("/");
+  router.push('/')
 }
 
 function sendToTeam() {
-  router.push("/team");
+  router.push('/team')
 }
-let user = null;
-if (localStorage.getItem("user") !== null) {
-  user = JSON.parse(localStorage.getItem("user"));
+let user = null
+if (localStorage.getItem('user') !== null) {
+  user = JSON.parse(localStorage.getItem('user'))
 }
-const teamName = ref(null);
+const teamName = ref(null)
 
 if (user !== null && user !== undefined) {
-  teamName.value = user?.team?.name;
+  teamName.value = user?.team?.name
 }
 
-const isConnected = user !== null && user !== undefined;
-
+const isConnected = user !== null && user !== undefined
 </script>
 
 <template>
   <div class="navbar">
     <div class="brandName clickable" @click="sendToHome">Metrolympiades</div>
 
-    <div v-if="teamName !== null && teamName !== undefined && isConnected" class="teamName clickable" v-on:click="sendToTeam">{{ teamName }}</div>
+    <div
+      v-if="teamName !== null && teamName !== undefined && isConnected"
+      class="teamName clickable"
+      v-on:click="sendToTeam"
+    >
+      {{ teamName }}
+    </div>
     <ul>
-      <li><router-link to="/" class="linkWithIcon"><TrophyIcon class="icon"/>Classement général</router-link></li>
-      <li v-if="isConnected"><router-link to="/team" class="linkWithIcon"><UserGroupIcon class="icon"/>Mon équipe</router-link></li>
-      <li v-if="isConnected"><router-link to="/games" class="linkWithIcon"><RocketLaunchIcon class="icon"/>Mes matchs</router-link></li>
-      <li v-if="isConnected"><button @click="logout"><ArrowRightStartOnRectangleIcon class="icon"/>Se déconnecter</button></li>
+      <li>
+        <router-link to="/" class="linkWithIcon"
+          ><TrophyIcon class="icon" />Classement général</router-link
+        >
+      </li>
+      <li v-if="isConnected">
+        <router-link to="/team" class="linkWithIcon"
+          ><UserGroupIcon class="icon" />Mon équipe</router-link
+        >
+      </li>
+      <li v-if="isConnected">
+        <router-link to="/games" class="linkWithIcon"
+          ><RocketLaunchIcon class="icon" />Mes matchs</router-link
+        >
+      </li>
+      <li v-if="isConnected">
+        <button @click="logout">
+          <ArrowRightStartOnRectangleIcon class="icon" />Se déconnecter
+        </button>
+      </li>
 
-      <li v-if="!isConnected"><button @click="register"><PlusCircleIcon class="icon"/>Créer une équipe</button></li>
-      <li v-if="!isConnected"><button @click="login"><ArrowLeftEndOnRectangleIcon class="icon"/>Se connecter</button></li>
+      <li v-if="!isConnected">
+        <button @click="register"><PlusCircleIcon class="icon" />Créer une équipe</button>
+      </li>
+      <li v-if="!isConnected">
+        <button @click="login"><ArrowLeftEndOnRectangleIcon class="icon" />Se connecter</button>
+      </li>
     </ul>
   </div>
 </template>
 
-
-
 <style scoped>
-button{
+button {
   width: 100%;
 }
 
@@ -78,7 +107,6 @@ button{
   direction: row;
   align-content: center;
   justify-content: space-between;
-
 }
 .brandName {
   font-size: 1.5rem;
@@ -124,5 +152,4 @@ button{
 .navbar a:hover {
   text-decoration: underline;
 }
-
 </style>

@@ -10,21 +10,26 @@ const password = ref('')
 
 const confirmPassword = ref('')
 
-const username = ref('');
-const teamName = ref('');
+const username = ref('')
+const teamName = ref('')
 
 const boolean = computed(() => {
-  return !!email.value.trim() && !!password.value.trim() && !!confirmPassword.value.trim() && !!username.value.trim() && !!teamName.value.trim()
+  return (
+    !!email.value.trim() &&
+    !!password.value.trim() &&
+    !!confirmPassword.value.trim() &&
+    !!username.value.trim() &&
+    !!teamName.value.trim()
+  )
 })
 
 const isLoading = ref(false)
 
 function createAccount() {
-
   isLoading.value = true
   if (password.value !== confirmPassword.value) {
-    alert('Les mots de passe ne correspondent pas');
-    return;
+    alert('Les mots de passe ne correspondent pas')
+    return
   }
   fetch('http://localhost:3000/auth/register', {
     method: 'POST',
@@ -35,7 +40,7 @@ function createAccount() {
       email: email.value,
       username: username.value,
       password: password.value,
-      teamName: teamName.value
+      teamName: teamName.value,
     }),
   })
     .then((response) => response.json())
@@ -101,18 +106,13 @@ function createAccount() {
         />
 
         <button type="submit" :disabled="!boolean || isLoading">J'inscris mon équipe</button>
-        <p>Déjà inscrit ?
-          <router-link to="/login">
-            Me connecter
-          </router-link>
+        <p>
+          Déjà inscrit ?
+          <router-link to="/login"> Me connecter </router-link>
         </p>
       </form>
-
-
     </div>
   </main>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

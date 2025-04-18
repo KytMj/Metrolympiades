@@ -64,6 +64,28 @@ function sortMatches(event) {
       break
   }
 }
+
+function handleDelete(matchId) {
+  isLoading.value = true
+  fetch('http://localhost:3000/matches/' + matchId, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${user.token}`,
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.message === 'Match deleted') {
+        matches.value = matches.value.filter((match) => match.id !== matchId) // or fetch again
+        isLoading.value = false
+        alert('Match supprimé avec succès')
+      } else {
+        console.error('Error deleting match:', data.message)
+        isLoading.value = false
+        alert('Erreur lors de la suppression du match')
+      }
+    })
+}
 </script>
 
 <template>
@@ -93,23 +115,29 @@ function sortMatches(event) {
         <p>Aucun classement disponible.</p>
       </div>
       <div v-else class="container columnDisplay">
-        <MatchCard v-for="match in matches" :key="match.id" :match="match" class="card" />
+        <MatchCard
+          v-for="match in matches"
+          :key="match.id"
+          :match="match"
+          @delete="handleDelete"
+          class="card"
+        />
       </div>
     </div>
   </main>
 </template>
 
 <style scoped>
-.icon{
+.icon {
   margin-right: 10px;
 }
-.filer{
+.filer {
   flex-direction: row;
 }
-.columnDisplay{
+.columnDisplay {
   flex-direction: column;
 }
-select{
+select {
   width: 10%;
 }
 main {
@@ -125,5 +153,4 @@ main {
 button {
   margin-right: 200px;
 }
-
 </style>

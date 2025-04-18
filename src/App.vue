@@ -1,15 +1,11 @@
 <script setup>
-import SideNavbar from "./components/SideNavbar.vue";
-import { RouterView } from "vue-router";
-
-
-
-
+import SideNavbar from './components/SideNavbar.vue'
+import { RouterView } from 'vue-router'
 </script>
 
 <template>
   <main>
-    <SideNavbar/>
+    <SideNavbar />
     <RouterView />
   </main>
 </template>
