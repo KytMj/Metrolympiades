@@ -57,3 +57,21 @@ input {
   padding: 1rem;
   margin-bottom: 1rem;
 }
+
+.icon{
+  width: 20px;
+  height: 20px;
+}
+
+.centerer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+select{
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+  width: 75%;
+}
