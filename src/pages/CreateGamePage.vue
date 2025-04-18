@@ -81,7 +81,7 @@ function activitySet(event) {
 }
 
 function formatDate(date) {
-  return date.toISOString().slice(0, 19) + 'Z';
+  return date.toString().slice(0, 19) + 'Z';
 }
 
 
@@ -101,9 +101,12 @@ function createGame(submitEvent) {
 
   const [hours, minutes] = FORM.beginingHour.value.split(':');
   now.setHours(hours, minutes, 0, 0);
+  console.log("date",now);
 
   const formattedDate = formatDate(now);
+  console.log("formattedDate",formattedDate);
 
+  isLoading.value = true;
   fetch('http://localhost:3000/matches', {
     method: 'POST',
     headers: {
@@ -124,6 +127,8 @@ function createGame(submitEvent) {
       if (data.message == "Match created") {
         alert("Match créé avec succès");
       } else {
+        console.log(data);
+
         alert("Erreur lors de la création du match");
       }
       isLoading.value = false;
@@ -133,7 +138,7 @@ function createGame(submitEvent) {
 
 <template>
     <h1>
-        Create Games!
+        Créer un match
     </h1>
     <div class="container">
     <form v-if="!isLoading" @submit.prevent="createGame">
