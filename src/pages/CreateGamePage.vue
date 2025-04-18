@@ -85,6 +85,15 @@ function formatDate(date) {
 }
 
 
+function checkFormCompleted(){
+  return !(opponent.value == null || activity.value == null);
+}
+
+function checkPageLoadedSuccessfully() {
+  return !(opponents.value.length == 0 || activities.value.length == 0);
+}
+
+
 function createGame(submitEvent) {
   const FORM = submitEvent.target.elements;
 
@@ -170,7 +179,7 @@ function createGame(submitEvent) {
       </div>
 
       <div class="form-element">
-        <button type="submit" :disabled="isLoading || opponents.length == 0 || activities.length == 0 || opponent == null">Créer le match</button>
+        <button type="submit" :disabled="isLoading || !checkPageLoadedSuccessfully() || !checkFormCompleted()">Créer le match</button>
 
       </div>
 
@@ -233,6 +242,13 @@ input[type="number"]{
 .score * {
   margin-bottom: 0;
   align-self: center;
+}
+
+select{
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+  width: 75%;
 }
 
 </style>
