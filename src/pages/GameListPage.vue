@@ -70,7 +70,7 @@ function sortMatches(event) {
   <main>
     <div class="header">
       <h1>Mes matchs</h1>
-      <div class="container">
+      <div class="container columnDisplay">
         <button @click="pushToAddGamePage">Ajouter un match</button>
       </div>
     </div>
@@ -78,7 +78,7 @@ function sortMatches(event) {
       <div class="container filter">
         <FunnelIcon class="icon" />
         <select @change="sortMatches($event)">
-          <option :selected="true" disabled>trier par</option>
+          <option :selected="true" disabled>Trier par</option>
           <option value="date">Date</option>
           <option value="activity">Activité</option>
           <option value="team">Équipe</option>
@@ -92,7 +92,7 @@ function sortMatches(event) {
       <div v-else-if="matches.length === 0">
         <p>Aucun classement disponible.</p>
       </div>
-      <div v-else class="container">
+      <div v-else class="container columnDisplay">
         <MatchCard v-for="match in matches" :key="match.id" :match="match" class="card" />
       </div>
     </div>
@@ -100,7 +100,13 @@ function sortMatches(event) {
 </template>
 
 <style scoped>
-.container{
+.icon{
+  margin-right: 10px;
+}
+.filer{
+  flex-direction: row;
+}
+.columnDisplay{
   flex-direction: column;
 }
 select{

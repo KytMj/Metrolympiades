@@ -1,4 +1,5 @@
 <script setup>
+import router from "@/router";
 import { ref } from "vue";
 const isLoading = ref(false);
 const opponents = ref([]);
@@ -126,6 +127,13 @@ function createGame(submitEvent) {
     .then((data) => {
       if (data.message == "Match created") {
         alert("Match créé avec succès");
+        isLoading.value = false;
+        console.log("PUSHING");
+
+        router.push('/games');
+      } else if(data.message == "Match already exists") {
+        alert("Un match existe déjà entre ces deux équipes");
+        isLoading.value = false;
       } else {
         console.log(data);
 
@@ -190,7 +198,7 @@ function createGame(submitEvent) {
 
     </form>
     <div v-else>
-      <p>Loading...</p>
+      <p>Chargement...</p>
     </div>
 
     </div>
