@@ -45,7 +45,6 @@ fetchRanking()
       </div>
     </div>
   </main>
->>>>>>> main
 </template>
 
 <style scoped>

@@ -131,6 +131,7 @@ button {
   display: flex;
   flex-direction: column;
   padding: 20px;
+  grid-column: 1;
 }
 
 .navbar ul {

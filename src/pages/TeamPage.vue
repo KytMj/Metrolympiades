@@ -67,13 +67,15 @@ fetchTeam()
 </script>
 
 <template>
-  <div>
-    <h1> Mon équipe </h1>
-  </div>
-
   <div class="container">
-      <form class="card" @submit.prevent="updateTeam">
-        <p>Nom de l'équipe</p>
+    <form class="card" @submit.prevent="updateTeam">
+      <div class="grid">
+        <h1 class="teamPageTitle"> Mon équipe </h1>
+        <button class="teamPageSaveBtn">Enregistrer</button>
+      </div>
+
+      <div class="grid">
+        <p class="text">Nom de l'équipe</p>
         <input
         type="text"
         id="teamName"
@@ -82,8 +84,9 @@ fetchTeam()
         v-model="teamName"
         required
         />
-        <p>Membres de l'équipe</p>
-        <div v-for="(member) in teamMembers" :key="member">
+
+        <p class="text">Membres de l'équipe</p>
+        <div v-for="(member) in teamMembers" :key="member" class="grid">
           <input
           type="text"
           id="teamMember"
@@ -91,7 +94,7 @@ fetchTeam()
           :placeholder="member"
           readonly
           />
-          <button @click="deleteMember(member)">X</button>
+          <button @click="deleteMember(member)" class="deleteButton">X</button>
         </div>
         <input
           type="text"
@@ -99,8 +102,42 @@ fetchTeam()
           name="newTeamMember"
           v-model="newTeamMember"
         />
-        <button>Enregistrer</button>
-      </form>
-      <button @click="addMember">Ajouter un coéquipier</button>
+        <button @click="addMember">Ajouter un coéquipier</button>
+      </div>
+    </form>
   </div>
 </template>
+
+<style scoped>
+ .grid{
+    display: grid;
+  }
+
+  .grid button {
+    align-items: center;
+    place-self: center;
+    justify-self: center;
+  }
+
+  .deleteButton{
+    grid-column: 2;
+    align-items: center;
+    max-width: fit-content;
+    max-height: fit-content;
+    padding: 1rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    margin-bottom: 16px;
+  }
+
+  .teamPageTitle {
+    text-align: justify;
+    grid-column: 1;
+  }
+
+  .teamPageSaveBtn {
+    grid-column: 2;
+    max-width: fit-content;
+    max-height: fit-content;
+  }
+</style>

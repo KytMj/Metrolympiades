@@ -68,3 +68,7 @@ select {
   border: 1px solid #ccc;
   width: 75%;
 }
+
+.text {
+  text-align: justify;
+}
