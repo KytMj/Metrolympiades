@@ -10,17 +10,22 @@ const password = ref('')
 
 const confirmPassword = ref('')
 
-const username = ref('');
-const teamName = ref('');
+const username = ref('')
+const teamName = ref('')
 
 const boolean = computed(() => {
-  return !!email.value.trim() && !!password.value.trim() && !!confirmPassword.value.trim() && !!username.value.trim() && !!teamName.value.trim()
+  return (
+    !!email.value.trim() &&
+    !!password.value.trim() &&
+    !!confirmPassword.value.trim() &&
+    !!username.value.trim() &&
+    !!teamName.value.trim()
+  )
 })
 
 const isLoading = ref(false)
 
 function createAccount() {
-
   isLoading.value = true
   if (password.value !== confirmPassword.value) {
     alert('Les mots de passe ne correspondent pas')
@@ -29,21 +34,18 @@ function createAccount() {
   fetch('http://localhost:3000/auth/register', {
     method: 'POST',
     headers: {
-                "Content-Type": "application/json",
-                Authorization: "Bearer jwt_token",
-            },
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify({
       email: email.value,
       username: username.value,
       password: password.value,
-      teamName: teamName.value
+      teamName: teamName.value,
     }),
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data)
       localStorage.setItem('user', JSON.stringify(data))
-      console.log('user', JSON.parse(localStorage.getItem('user')))
       router.push('leaderboard').then(() => {
         location.reload()
       })
@@ -104,18 +106,13 @@ function createAccount() {
         />
 
         <button type="submit" :disabled="!boolean || isLoading">J'inscris mon équipe</button>
-        <p>Déjà inscrit ?
-          <router-link to="/login">
-            Me connecter
-          </router-link>
+        <p>
+          Déjà inscrit ?
+          <router-link to="/login"> Me connecter </router-link>
         </p>
       </form>
-
-
     </div>
   </main>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
