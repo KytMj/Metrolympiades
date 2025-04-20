@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-import CreateGamePage from './pages/CreateGamePage.vue';                                        
+import CreateGamePage from './pages/CreateGamePage.vue';
 import GameListPage from './pages/GameListPage.vue';
 import LeaderBoardPage from './pages/LeaderBoardPage.vue'; //home page
 import LoginPage from './pages/LoginPage.vue';
@@ -15,13 +15,19 @@ const routes = [
         component: LeaderBoardPage
     },
     {
-        path: "/game", //besoin de s'authentifier
+        path: "/game",
         name: "game",
+        meta: {
+          requiresAuth: true
+        },
         component: CreateGamePage
     },
     {
-        path: "/games",  //besoin de s'authentifier
+        path: "/games",
         name: "gameList",
+        meta: {
+          requiresAuth: true
+        },
         component: GameListPage
     },
     {
@@ -35,8 +41,11 @@ const routes = [
         component: RegisterPage
     },
     {
-        path: "/team",  //besoin de s'authentifier
+        path: "/team",
         name: "team",
+        meta: {
+          requiresAuth: true
+        },
         component: TeamPage
     }
 ];
@@ -44,6 +53,19 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(),
     routes
+});
+
+router.beforeEach((to, _, next) => {
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  if (user) {
+    return next();
+  }
+
+  if (to.meta.requiresAuth) {
+    return next({ name: 'login' });
+  }
+  next();
 });
 
 export default router;

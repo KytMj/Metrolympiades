@@ -16,8 +16,8 @@ const router = useRouter()
 
 function logout() {
   localStorage.removeItem('user')
-  localStorage.setItem('user', null)
-  router.push('/register').then(() => {
+  localStorage.setItem('user', null) //TODO : si je garde userTeam, il faudra removeItem pour lui aussi
+  router.push('/').then(() => {
     location.reload()
   })
 }
