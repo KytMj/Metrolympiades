@@ -36,6 +36,7 @@ function logIn() {
       }
 
       localStorage.setItem('user', JSON.stringify(data))
+      localStorage.setItem('userTeam', JSON.stringify(data.team))
       router.push('leaderboard').then(() => {
         location.reload()
       })

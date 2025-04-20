@@ -37,17 +37,24 @@ function sendToHome() {
 function sendToTeam() {
   router.push('/team')
 }
-let user = null
-if (localStorage.getItem('user') !== null) {
-  user = JSON.parse(localStorage.getItem('user'))
-}
+
+const user = ref(null)
+const userTeam = ref(null)
 const teamName = ref(null)
 
-if (user !== null && user !== undefined) {
-  teamName.value = user?.team?.name
+if (localStorage.getItem('user') !== null) {
+  user.value = JSON.parse(localStorage.getItem('user'))
+  userTeam.value = JSON.parse(localStorage.getItem('userTeam'))
+  console.log(localStorage.getItem('userTeam'))
+  teamName.value = userTeam.value?.name
+  console.log(teamName.value)
 }
 
-const isConnected = user !== null && user !== undefined
+if (user.value !== null && user.value !== undefined) {
+  teamName.value = user.value?.team?.name
+}
+
+const isConnected = user.value !== null && user.value !== undefined
 </script>
 
 <template>

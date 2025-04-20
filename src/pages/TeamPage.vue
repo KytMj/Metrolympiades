@@ -10,6 +10,7 @@ const teamData = ref(null);
 const isLoading = ref(false);
 const teamName = ref("");
 const teamMembers = ref(null);
+const userName = ref("");
 
 const newTeamMember = ref("")
 
@@ -27,7 +28,7 @@ function fetchTeam() {
       isLoading.value = false;
       teamName.value = teamData.value.name
       teamMembers.value = teamData.value.members
-      console.log(teamData.value.members)
+      userName.value = user.username
     })
 }
 
@@ -46,8 +47,18 @@ function updateTeam() {
     })
     .then((response) => response.json())
     .then((data) => {
+      fetch("http://localhost:3000/teams/me", {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${user.token}`,
+        },
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        localStorage.setItem('userTeam', JSON.stringify({"id": data.id, "name": data.name}))
+      })
       console.log(data.message)
-      console.log(teamMembers.value)
+      console.log(localStorage.getItem('userTeam'))
       isLoading.value = false;
     })
 }
@@ -55,6 +66,7 @@ function updateTeam() {
 function addMember() {
   if(newTeamMember.value != ""){
     teamMembers.value.push(newTeamMember.value);
+    newTeamMember.value = "";
   }
 }
 
@@ -68,10 +80,10 @@ fetchTeam()
 
 <template>
   <div class="container">
-    <form class="card" @submit.prevent="updateTeam">
+    <form class="card" @submit.prevent="">
       <div class="grid">
         <h1 class="teamPageTitle"> Mon équipe </h1>
-        <button class="teamPageSaveBtn">Enregistrer</button>
+        <button class="teamPageSaveBtn" @click="updateTeam">Enregistrer</button>
       </div>
 
       <div class="grid">
@@ -86,10 +98,16 @@ fetchTeam()
         />
 
         <p class="text">Membres de l'équipe</p>
+        <input
+          type="text"
+          id="userMember"
+          name="userMember"
+          :placeholder="userName + ' (Vous)'"
+          readonly
+          />
         <div v-for="(member) in teamMembers" :key="member" class="grid">
           <input
           type="text"
-          id="teamMember"
           name="teamMember"
           :placeholder="member"
           readonly
@@ -101,6 +119,7 @@ fetchTeam()
           id="newTeamMember"
           name="newTeamMember"
           v-model="newTeamMember"
+          placeholder="Ecrire le nom d'un nouveau membre"
         />
         <button @click="addMember">Ajouter un coéquipier</button>
       </div>
@@ -139,5 +158,24 @@ fetchTeam()
     grid-column: 2;
     max-width: fit-content;
     max-height: fit-content;
+  }
+
+  input:focus::-webkit-input-placeholder {
+	color : transparent;
+  }
+  input:focus::-moz-placeholder {
+    color : transparent;
+  }
+  input:-moz-placeholder {
+    color : transparent;
+  }
+  input:focus::-webkit-input-placeholder {
+    opacity : 0;
+  }
+  input:focus::-moz-placeholder {
+    opacity : 0;
+  }
+  input:-moz-placeholder {
+    opacity : 0;
   }
 </style>

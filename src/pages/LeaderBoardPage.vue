@@ -5,6 +5,14 @@ const ranking = ref([])
 
 const isLoading = ref(false)
 
+function sortByKey(array, key) {
+  return array.sort(function(a, b) {
+    var x = a[key];
+    var y = b[key];
+    return ((x < y) ? 1 : ((x > y) ? -1 : 0));
+  });
+}
+
 function fetchRanking() {
   console.log(localStorage.getItem('user'))
   isLoading.value = true
@@ -13,10 +21,12 @@ function fetchRanking() {
   })
     .then((response) => response.json())
     .then((data) => {
-      ranking.value = data
+      console.log(data)
+      ranking.value = sortByKey(data, 'points')
       isLoading.value = false
     })
 }
+
 
 fetchRanking()
 </script>
