@@ -3,6 +3,7 @@ import router from '@/router'
 import { ref } from 'vue'
 import MatchCard from '@/components/MatchCard.vue'
 import { FunnelIcon } from '@heroicons/vue/24/outline'
+import { fetchMatches } from '../utils/APIFetches.js'
 
 function pushToAddGamePage() {
   router.push('/game')
@@ -12,22 +13,11 @@ const matches = ref([])
 const isLoading = ref(false)
 const user = JSON.parse(localStorage.getItem('user'))
 
-function fetchMatches() {
-  isLoading.value = true
-  fetch('http://localhost:3000/matches/me', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${user.token}`,
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      matches.value = data
-      isLoading.value = false
-    })
-}
-fetchMatches()
+isLoading.value = true
+fetchMatches(user.token).then((data) => {
+  matches.value = data
+  isLoading.value = false
+})
 
 function sortByDate(a, b) {
   return new Date(b.startedAt) - new Date(a.startedAt)
@@ -42,8 +32,6 @@ function lowestScore(a) {
 }
 
 function sortMatches(event) {
-  console.log('sortMatches', event.target.value)
-
   switch (event.target.value) {
     case 'date':
       matches.value.sort(sortByDate)
@@ -112,7 +100,7 @@ function handleDelete(matchId) {
         <p>Chargement...</p>
       </div>
       <div v-else-if="matches.length === 0">
-        <p>Aucun classement disponible.</p>
+        <p>Pas de encore de matchs avec cette équipe. Vous pouvez en créer un en appuyant sur "créer un match".</p>
       </div>
       <div v-else class="container columnDisplay">
         <MatchCard
