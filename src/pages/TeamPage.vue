@@ -27,8 +27,9 @@ function fetchTeam() {
       teamData.value = data;
       isLoading.value = false;
       teamName.value = teamData.value.name
-      teamMembers.value = teamData.value.members
       userName.value = user.username
+      if(teamData.value.members != null) teamMembers.value = [user.username, ...teamData.value.members]
+      else teamMembers.value = [user.username]
     })
 }
 
@@ -42,7 +43,7 @@ function updateTeam() {
             },
             body: JSON.stringify({
                 name: teamName.value,
-                members: teamMembers.value,
+                members: teamMembers.value.filter(member => member != userName.value),
             }),
     })
     .then((response) => response.json())
@@ -98,21 +99,20 @@ fetchTeam()
         />
 
         <p class="text">Membres de l'équipe</p>
-        <input
+        <div v-for="(member) in teamMembers" :key="member" class="grid">
+          <input v-if="member == userName"
           type="text"
-          id="userMember"
-          name="userMember"
+          name="teamMember"
           :placeholder="userName + ' (Vous)'"
           readonly
           />
-        <div v-for="(member) in teamMembers" :key="member" class="grid">
-          <input
+          <input v-else
           type="text"
           name="teamMember"
           :placeholder="member"
           readonly
           />
-          <button @click="deleteMember(member)" class="deleteButton">X</button>
+          <button v-if="!(member == userName)" @click="deleteMember(member)" class="deleteButton">X</button>
         </div>
         <input
           type="text"
