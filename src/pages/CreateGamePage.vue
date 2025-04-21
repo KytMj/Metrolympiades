@@ -1,48 +1,43 @@
 <script setup>
 import router from '@/router'
 import { ref } from 'vue'
+import { fetchAllTeams, fetchMatches, fetchMyTeam } from '../utils/APIFetches.js'
 const isLoading = ref(false)
-const opponents = ref([])
 
 const myTeam = ref(null)
-const allTeams = ref([])
 const user = JSON.parse(localStorage.getItem('user'))
+const myMatches = ref([]);
 
+
+fetchMatches(user.token).then((data) => {
+  myMatches.value = data
+})
+
+const opponents = ref([]) //all the opponents
+const filteredOpponents = ref([]) //the opponents displayed in the select input
+//sets opponents value to all teams except the logged in team
 function fetchOpponents() {
   isLoading.value = true
-  fetch('http://localhost:3000/teams/me', {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${user.token}`,
-    },
-  })
-    .then((response) => response.json())
+  fetchMyTeam(user.token)
     .then((data) => {
       myTeam.value = data
-      isLoading.value = false
     })
     .then(() => {
-      isLoading.value = true
-      fetch('http://localhost:3000/teams', {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          allTeams.value = data
-          opponents.value = allTeams.value.filter((team) => {
-            return team.id !== myTeam.value.id
-          })
-          isLoading.value = false
-        })
+      return fetchAllTeams()
+    })
+    .then((data) => {
+      // Filter out the team that is logged in
+      opponents.value = data.filter((team) => team.id !== myTeam.value.id)
+      filteredOpponents.value = opponents.value
+    })
+    .finally(() => {
+      isLoading.value = false
     })
 }
-
 fetchOpponents()
 
-const activities = ref([])
+const activities = ref([]) // all the activities
+const filteredActivities = ref([]) // the activities displayed in the select input
 function fetchActivities() {
   isLoading.value = true
   fetch('http://localhost:3000/activities', {
@@ -54,6 +49,7 @@ function fetchActivities() {
     .then((response) => response.json())
     .then((data) => {
       activities.value = data
+      filteredActivities.value = activities.value;
       isLoading.value = false
     })
 }
@@ -70,6 +66,13 @@ function opponentSet(event) {
   opponent.value = opponents.value.filter((opponent) => {
     return opponent.id === event.target.value
   })[0]
+
+  // Remove activities that have already been played against the team in the selected activity
+  filteredActivities.value = activities.value.filter((activity) => {
+    return !myMatches.value.some((match) => {
+      return match.team2 === opponent.value.name && match.activity === activity.name
+    })
+  })
 }
 
 const activity = ref(null)
@@ -78,6 +81,13 @@ function activitySet(event) {
   activity.value = activities.value.filter((activity) => {
     return activity.id === event.target.value
   })[0]
+
+  // Remove opponents that have already played against the team in the selected activity
+  filteredOpponents.value = opponents.value.filter((opponent) => {
+    return !myMatches.value.some((match) => {
+      return match.activity === activity.value.name && match.team2 === opponent.name
+    })
+  })
 }
 
 function formatDate(date) {
@@ -129,7 +139,7 @@ function createGame(submitEvent) {
         router.push('/games')
       } else if (data.message === 'Match already exists') {
         isLoading.value = false
-        alert('Un match existe déjà entre ces deux équipes')
+        alert('Un match de l\'activité choisie existe déjà entre ces deux équipes')
       } else {
         console.log(data)
         isLoading.value = false
@@ -147,7 +157,7 @@ function createGame(submitEvent) {
         <label for="opponent">Adversaire</label>
         <select @input="opponentSet" id="opponent" class="opponent" v-if="opponents.length > 0">
           <option :selected="true" disabled>Choisir un adversaire</option>
-          <option v-for="opponent in opponents" :key="opponent.id" :value="opponent.id">
+          <option v-for="opponent in filteredOpponents" :key="opponent.id" :value="opponent.id">
             {{ opponent.name }}
           </option>
         </select>
@@ -157,7 +167,7 @@ function createGame(submitEvent) {
         <label for="activity">Activité</label>
         <select @input="activitySet" id="activity" class="activity" v-if="activities.length > 0">
           <option :selected="true" disabled>Choisir une activité</option>
-          <option v-for="activity in activities" :key="activity.id" :value="activity.id">
+          <option v-for="activity in filteredActivities" :key="activity.id" :value="activity.id">
             {{ activity.name }}
           </option>
         </select>
