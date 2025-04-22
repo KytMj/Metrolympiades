@@ -9,7 +9,7 @@ const user = JSON.parse(localStorage.getItem("user"));
 const teamData = ref(null);
 const isLoading = ref(false);
 const teamName = ref("");
-const teamMembers = ref(null);
+const teamMembers = ref([]);
 const userName = ref("");
 
 const newTeamMember = ref("")
@@ -28,8 +28,7 @@ function fetchTeam() {
       isLoading.value = false;
       teamName.value = teamData.value.name
       userName.value = user.username
-      if(teamData.value.members != null) teamMembers.value = [user.username, ...teamData.value.members]
-      else teamMembers.value = [user.username]
+      teamMembers.value = (teamData.value.members != null ?  [user.username, ...teamData.value.members] : [user.username])
     })
 }
 
@@ -100,28 +99,22 @@ fetchTeam()
 
         <p class="text">Membres de l'équipe</p>
         <div v-for="(member) in teamMembers" :key="member" class="grid">
-          <input v-if="member == userName"
-          type="text"
-          name="teamMember"
-          :placeholder="userName + ' (Vous)'"
-          readonly
-          />
-          <input v-else
-          type="text"
-          name="teamMember"
-          :placeholder="member"
-          readonly
-          />
-          <button v-if="!(member == userName)" @click="deleteMember(member)" class="deleteButton">X</button>
+          <div class="memberRow">
+            <p class="memberCard">{{ member }}{{ member == userName ? " (Vous)":"" }}</p>
+            <button v-show="!(member == userName)" @click="deleteMember(member)" >X</button>
+          </div>
         </div>
-        <input
-          type="text"
-          id="newTeamMember"
-          name="newTeamMember"
-          v-model="newTeamMember"
-          placeholder="Ecrire le nom d'un nouveau membre"
-        />
-        <button @click="addMember">Ajouter un coéquipier</button>
+        <div class="memberRow">
+          <input
+            type="text"
+            id="newTeamMember"
+            name="newTeamMember"
+            v-model="newTeamMember"
+            placeholder="Inscrire un nouveau membre"
+            class="memberCard"
+          />
+          <button class="newMember" @click="addMember">+</button>
+        </div>
       </div>
     </form>
   </div>
@@ -132,21 +125,23 @@ fetchTeam()
     display: grid;
   }
 
-  .grid button {
+  .memberRow{
+    display: flex;
     align-items: center;
-    place-self: center;
-    justify-self: center;
   }
 
-  .deleteButton{
-    grid-column: 2;
-    align-items: center;
+  .memberRow button {
     max-width: fit-content;
     max-height: fit-content;
-    padding: 1rem;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    margin-bottom: 16px;
+    padding: 0.5rem;
+    background-color:  #bc4749;
+    color: #e0e1dd;
+  }
+
+  .memberRow p,
+  .memberRow button,
+  .memberRow input{
+    align-self: center;
   }
 
   .teamPageTitle {
@@ -158,6 +153,18 @@ fetchTeam()
     grid-column: 2;
     max-width: fit-content;
     max-height: fit-content;
+  }
+
+  .memberCard{
+    width:100%;
+    padding:10px;
+    margin:5px;
+    background-color: #e0e1dd;
+    border-radius: 8px;
+  }
+
+  .newMember{
+    background-color: #386641 !important;
   }
 
   input:focus::-webkit-input-placeholder {
