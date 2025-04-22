@@ -116,29 +116,29 @@ function handleDelete(matchId) {
 </template>
 
 <style scoped>
-.icon {
-  margin-right: 10px;
-}
-.filer {
-  flex-direction: row;
-}
-.columnDisplay {
-  flex-direction: column;
-}
-select {
-  width: 10%;
-}
-main {
-  margin: 50px;
-}
-.header {
-  margin-left: 400px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-}
-button {
-  margin-right: 200px;
-}
+  .icon {
+    margin-right: 10px;
+  }
+  .filer {
+    flex-direction: row;
+  }
+  .columnDisplay {
+    flex-direction: column;
+  }
+  select {
+    width: 10%;
+  }
+  main {
+    margin: 50px;
+  }
+  .header {
+    margin-left: 400px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  button {
+    margin-right: 200px;
+  }
 </style>

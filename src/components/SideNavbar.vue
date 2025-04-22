@@ -16,7 +16,7 @@ const router = useRouter()
 
 function logout() {
   localStorage.removeItem('user')
-  localStorage.setItem('user', null) //TODO : si je garde userTeam, il faudra removeItem pour lui aussi
+  localStorage.setItem('user', null)
   router.push('/').then(() => {
     location.reload()
   })
@@ -39,15 +39,11 @@ function sendToTeam() {
 }
 
 const user = ref(null)
-const userTeam = ref(null)
 const teamName = ref(null)
 
 if (localStorage.getItem('user') !== null) {
   user.value = JSON.parse(localStorage.getItem('user'))
-  userTeam.value = JSON.parse(localStorage.getItem('userTeam'))
-  console.log(localStorage.getItem('userTeam'))
-  teamName.value = userTeam.value?.name
-  console.log(teamName.value)
+  teamName.value = user.value?.team?.name
 }
 
 if (user.value !== null && user.value !== undefined) {

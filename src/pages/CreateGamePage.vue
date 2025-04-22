@@ -109,10 +109,8 @@ function createGame(submitEvent) {
 
   const [hours, minutes] = FORM.beginingHour.value.split(':')
   now.setHours(hours, minutes, 0, 0)
-  console.log('date', now)
 
   const formattedDate = formatDate(now)
-  console.log('formattedDate', formattedDate)
 
   isLoading.value = true
   fetch('http://localhost:3000/matches', {
@@ -134,14 +132,12 @@ function createGame(submitEvent) {
       if (data.message === 'Match created') {
         isLoading.value = false
         alert('Match créé avec succès')
-        console.log('PUSHING')
 
         router.push('/games')
       } else if (data.message === 'Match already exists') {
         isLoading.value = false
         alert('Un match de l\'activité choisie existe déjà entre ces deux équipes')
       } else {
-        console.log(data)
         isLoading.value = false
         alert('Erreur lors de la création du match')
       }
