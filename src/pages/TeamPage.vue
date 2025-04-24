@@ -1,5 +1,7 @@
 <script setup>
   import { XMarkIcon } from '@heroicons/vue/24/solid'
+  import { PlusIcon } from '@heroicons/vue/24/solid';
+  
   import { fetchMyTeam } from "@/utils/APIFetches";
   import { ref } from "vue";
 
@@ -52,7 +54,7 @@
 <template>
   <div class="container">
     <form class="card" @submit.prevent="">
-      <div class="grid">
+      <div class="titleRow">
         <h1 class="teamPageTitle"> Mon équipe </h1>
         <button class="teamPageSaveBtn" @click="updateTeam">Enregistrer</button>
       </div>
@@ -72,7 +74,7 @@
         <div v-for="(member) in teamMembers" :key="member" class="grid">
           <div class="memberRow">
             <p class="memberCard">{{ member }}{{ member == userName ? " (Vous)":"" }}</p>
-            <button v-show="!(member == userName)" @click="deleteMember(member)" >X</button>
+            <button v-show="!(member == userName)" @click="deleteMember(member)" ><XMarkIcon class="icon" /></button>
           </div>
         </div>
         <div class="memberRow">
@@ -84,7 +86,7 @@
             placeholder="Inscrire un nouveau membre"
             class="memberCard"
           />
-          <button class="newMember" @click="addMember">+</button>
+          <button class="newMember" @click="addMember"><PlusIcon class="icon" /></button>
         </div>
       </div>
     </form>
@@ -96,9 +98,13 @@
     display: grid;
   }
 
-  .memberRow{
+  .memberRow, .titleRow{
     display: flex;
     align-items: center;
+  }
+
+  .titleRow{
+    justify-content: space-between;
   }
 
   .memberRow button {
