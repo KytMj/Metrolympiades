@@ -14,14 +14,12 @@ function sortByKey(array, key) {
 }
 
 function fetchRanking() {
-  console.log(localStorage.getItem('user'))
   isLoading.value = true
   fetch('http://localhost:3000/ranking', {
     method: 'GET',
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data)
       ranking.value = sortByKey(data, 'points')
       isLoading.value = false
     })

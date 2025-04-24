@@ -1,81 +1,52 @@
 <script setup>
-//import { XMarkIcon } from "@heroicons/vue/24/outline";
+  import { XMarkIcon } from '@heroicons/vue/24/solid'
+  import { fetchMyTeam } from "@/utils/APIFetches";
+  import { ref } from "vue";
 
-import { ref } from "vue";
 
+  const user = JSON.parse(localStorage.getItem("user"));
 
-const user = JSON.parse(localStorage.getItem("user"));
+  const teamData = ref(null);
+  const isLoading = ref(false);
+  const teamName = ref("");
+  const teamMembers = ref([]);
+  const userName = ref("");
 
-const teamData = ref(null);
-const isLoading = ref(false);
-const teamName = ref("");
-const teamMembers = ref([]);
-const userName = ref("");
-
-const newTeamMember = ref("")
-
-function fetchTeam() {
-    isLoading.value = true;
-    fetch("http://localhost:3000/teams/me", {
-        method: "GET",
-        headers: {
-          "Authorization": `Bearer ${user.token}`,
-        },
-    })
-    .then((response) => response.json())
+  const newTeamMember = ref("")
+  fetchMyTeam(user.token)
     .then((data) => {
       teamData.value = data;
       isLoading.value = false;
       teamName.value = teamData.value.name
       userName.value = user.username
-      teamMembers.value = (teamData.value.members != null ?  [user.username, ...teamData.value.members] : [user.username])
+      teamMembers.value = (teamData.value.members !== null ?  [user.username, ...teamData.value.members] : [user.username])
     })
-}
 
-function updateTeam() {
+
+  function updateTeam() {
     isLoading.value = true;
-    fetch("http://localhost:3000/teams/me", {
-        method: "PUT",
-        headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${user.token}`,
-            },
-            body: JSON.stringify({
-                name: teamName.value,
-                members: teamMembers.value.filter(member => member != userName.value),
-            }),
-    })
-    .then((response) => response.json())
-    .then((data) => {
-      fetch("http://localhost:3000/teams/me", {
-        method: "GET",
-        headers: {
-          "Authorization": `Bearer ${user.token}`,
-        },
-      })
-      .then((response) => response.json())
-      .then((data) => {
-        localStorage.setItem('userTeam', JSON.stringify({"id": data.id, "name": data.name}))
-      })
-      console.log(data.message)
-      console.log(localStorage.getItem('userTeam'))
+    updateTeam(user.token, teamName.value, teamMembers.value.filter(member => member != userName.value))
+    .then(() => {
+      fetchMyTeam(user.token)
+        .then((data) => {
+          user.team.name = data.name
+          localStorage.setItem('user', JSON.stringify(user))
+        })
+      location.reload()
       isLoading.value = false;
     })
-}
-
-function addMember() {
-  if(newTeamMember.value != ""){
-    teamMembers.value.push(newTeamMember.value);
-    newTeamMember.value = "";
   }
-}
 
-function deleteMember(member) {
-  teamMembers.value.splice(teamMembers.value.indexOf(member), 1);
-}
+  function addMember() {
+    if(newTeamMember.value !== ""){
+      teamMembers.value.push(newTeamMember.value);
+      newTeamMember.value = "";
+    }
+  }
 
-fetchTeam()
-
+  function deleteMember(member) {
+    teamMembers.value.splice(teamMembers.value.indexOf(member), 1);
+  }
 </script>
 
 <template>
@@ -167,22 +138,22 @@ fetchTeam()
     background-color: #386641 !important;
   }
 
-  input:focus::-webkit-input-placeholder {
+  .writeInput:focus::-webkit-input-placeholder {
 	color : transparent;
   }
-  input:focus::-moz-placeholder {
+  .writeInput:focus::-moz-placeholder {
     color : transparent;
   }
-  input:-moz-placeholder {
+  .writeInput:-moz-placeholder {
     color : transparent;
   }
-  input:focus::-webkit-input-placeholder {
+  .writeInput:focus::-webkit-input-placeholder {
     opacity : 0;
   }
-  input:focus::-moz-placeholder {
+  .writeInput:focus::-moz-placeholder {
     opacity : 0;
   }
-  input:-moz-placeholder {
+  .writeInput:-moz-placeholder {
     opacity : 0;
   }
 </style>
