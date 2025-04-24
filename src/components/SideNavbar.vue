@@ -7,6 +7,7 @@ import {
   TrophyIcon,
   PlusCircleIcon,
   RocketLaunchIcon,
+  Bars4Icon
 } from '@heroicons/vue/24/outline'
 
 import { useRouter } from 'vue-router'
@@ -51,10 +52,23 @@ if (user.value !== null && user.value !== undefined) {
 }
 
 const isConnected = user.value !== null && user.value !== undefined
+
+const isNavbarOpen = ref(false)
+
+function toggleNavbar() {
+  isNavbarOpen.value = !isNavbarOpen.value
+}
+
 </script>
 
 <template>
-  <div class="navbar">
+  <div>
+    <button class="hamburger" @click="toggleNavbar">
+      <Bars4Icon class="icon" />
+    </button>
+  </div>
+
+  <div :class="['navbar', { open: isNavbarOpen }]">
     <div class="brandName clickable" @click="sendToHome">Metrolympiades</div>
 
     <div
@@ -155,5 +169,37 @@ button {
 
 .navbar a:hover {
   text-decoration: underline;
+}
+
+.hamburger{
+  display: none;
+}
+@media screen and (max-width: 768px) {
+  .navbar {
+    opacity: 0;
+    transform: translateX(-20px);
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .hamburger {
+    display: block;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: none;
+    border: none;
+    color: black;
+    font-size: 24px;
+    z-index: 200;
+    cursor: pointer;
+  }
+
+  .navbar.open {
+    background-color: #333;
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
 }
 </style>
