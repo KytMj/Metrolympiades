@@ -2,7 +2,7 @@
   import { XMarkIcon } from '@heroicons/vue/24/solid'
   import { PlusIcon } from '@heroicons/vue/24/solid';
   
-  import { fetchMyTeam } from "@/utils/APIFetches";
+  import { fetchMyTeam, updateMyTeam } from "@/utils/APIFetches";
   import { ref } from "vue";
 
 
@@ -27,7 +27,7 @@
 
   function updateTeam() {
     isLoading.value = true;
-    updateTeam(user.token, teamName.value, teamMembers.value.filter(member => member != userName.value))
+    updateMyTeam(user.token, teamName.value, teamMembers.value.filter(member => member != userName.value))
     .then(() => {
       fetchMyTeam(user.token)
         .then((data) => {
