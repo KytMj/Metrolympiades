@@ -77,56 +77,57 @@ function handleDelete(matchId) {
 </script>
 
 <template>
-  <main>
-    <div class="header">
-      <h1>Mes matchs</h1>
-      <div class="container columnDisplay">
-        <button @click="pushToAddGamePage">Ajouter un match</button>
+  <div class="container">
+    <div class="prettyCard">
+      <div class="titleRow">
+        <h1 class="pageTitle">Mes matchs</h1>
+        <button class="pageButton" @click="pushToAddGamePage">Ajouter un match</button>
+      </div>
+      <div>
+        <div class="container filter">
+          <FunnelIcon class="icon" />
+          <select @change="sortMatches($event)">
+            <option :selected="true" disabled>Trier par</option>
+            <option value="date">Date</option>
+            <option value="activity">Activité</option>
+            <option value="team">Équipe</option>
+            <option value="highestScore">Plus grand score</option>
+            <option value="lowestScore">Plus petit score</option>
+          </select>
+        </div>
+        <div v-if="isLoading">
+          <p>Chargement...</p>
+        </div>
+        <div v-else-if="matches.length === 0">
+          <p>Pas de encore de matchs avec cette équipe. Vous pouvez en créer un en appuyant sur "créer un match".</p>
+        </div>
+        <div v-else class="container columnDisplay">
+          <MatchCard
+            v-for="match in matches"
+            :key="match.id"
+            :match="match"
+            @delete="handleDelete"
+            class="card"
+          />
+        </div>
       </div>
     </div>
-    <div>
-      <div class="container filter">
-        <FunnelIcon class="icon" />
-        <select @change="sortMatches($event)">
-          <option :selected="true" disabled>Trier par</option>
-          <option value="date">Date</option>
-          <option value="activity">Activité</option>
-          <option value="team">Équipe</option>
-          <option value="highestScore">Plus grand score</option>
-          <option value="lowestScore">Plus petit score</option>
-        </select>
-      </div>
-      <div v-if="isLoading">
-        <p>Chargement...</p>
-      </div>
-      <div v-else-if="matches.length === 0">
-        <p>Pas de encore de matchs avec cette équipe. Vous pouvez en créer un en appuyant sur "créer un match".</p>
-      </div>
-      <div v-else class="container columnDisplay">
-        <MatchCard
-          v-for="match in matches"
-          :key="match.id"
-          :match="match"
-          @delete="handleDelete"
-          class="card"
-        />
-      </div>
-    </div>
-  </main>
+  </div>
 </template>
 
 <style scoped>
   .icon {
     margin-right: 10px;
   }
-  .filer {
+  .filter {
     flex-direction: row;
   }
   .columnDisplay {
     flex-direction: column;
   }
   select {
-    width: 10%;
+    max-width: fit-content;
+    max-height: fit-content;
   }
   main {
     margin: 50px;
@@ -137,8 +138,5 @@ function handleDelete(matchId) {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 2rem;
-  }
-  button {
-    margin-right: 200px;
   }
 </style>

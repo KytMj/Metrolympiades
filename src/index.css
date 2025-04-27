@@ -1,3 +1,7 @@
+body{
+  background-color:#f0f6ff;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -6,6 +10,7 @@
   color: #34495e;
   background-color: #f0f6ff;
   margin-top: 60px;
+  margin-left:200px;
 }
 
 .clickable {
@@ -45,10 +50,25 @@ button:disabled {
   align-items: center;
 }
 
-form {
+.titleRow{
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+}
+
+.pageTitle {
+  text-align: justify;
+}
+
+.pageButton {
+  max-width: fit-content;
+  max-height: fit-content;
+}
+
+form, .prettyCard {
   display: flex;
   flex-direction: column;
-  width: 33%;
+  width: 50%;
   margin-top: 20px;
   background: white;
   padding: 20px;
@@ -92,4 +112,17 @@ select:focus {
 .text {
   text-align: justify;
   color: #555;
+}
+@media screen and (max-width: 768px) {
+  #app {
+    margin-left:0;
+  }
+
+  form, .prettyCard {
+    width: 80%;
+  }
+
+  .pageTitle {
+    font-size: large;
+  }
 }

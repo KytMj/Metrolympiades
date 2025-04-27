@@ -177,6 +177,7 @@ button {
   display: none;
   width: auto;
   background: none;
+  color:black;
   border: none;
   cursor: pointer;
 }

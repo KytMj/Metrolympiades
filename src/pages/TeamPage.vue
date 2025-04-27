@@ -55,8 +55,8 @@
   <div class="container">
     <form class="card" @submit.prevent="">
       <div class="titleRow">
-        <h1 class="teamPageTitle"> Mon équipe </h1>
-        <button class="teamPageSaveBtn" @click="updateTeam">Enregistrer</button>
+        <h1 class="pageTitle"> Mon équipe </h1>
+        <button class="pageButton" @click="updateTeam">Enregistrer</button>
       </div>
 
       <div class="grid">
@@ -98,13 +98,9 @@
     display: grid;
   }
 
-  .memberRow, .titleRow{
+  .memberRow{
     display: flex;
     align-items: center;
-  }
-
-  .titleRow{
-    justify-content: space-between;
   }
 
   .memberRow button {
@@ -121,16 +117,6 @@
     align-self: center;
   }
 
-  .teamPageTitle {
-    text-align: justify;
-    grid-column: 1;
-  }
-
-  .teamPageSaveBtn {
-    grid-column: 2;
-    max-width: fit-content;
-    max-height: fit-content;
-  }
 
   .memberCard{
     width:100%;
