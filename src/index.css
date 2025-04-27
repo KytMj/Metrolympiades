@@ -3,7 +3,8 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #34495e; /* slightly softer dark blue */
+  background-color: #f0f6ff; /* light background */
   margin-top: 60px;
 }
 
@@ -19,22 +20,25 @@ button {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  background-color: lightgray;
+  background: linear-gradient(135deg, #6fb1fc, #4364f7); /* gradient blue */
   align-content: center;
   align-items: center;
-  color: black;
+  color: white;
   border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
+  border-radius: 8px;
+  padding: 12px 24px;
   cursor: pointer;
   font-size: 1rem;
+  transition: background 0.3s, transform 0.2s;
 }
+
 button:hover {
-  background-color: gray;
-  color: white;
+  background: linear-gradient(135deg, #5a9bf5, #3556d0);
+  transform: scale(1.05);
 }
+
 button:disabled {
-  background-color: lightgray;
+  background: #d3d3d3;
   color: white;
   cursor: not-allowed;
 }
@@ -44,31 +48,52 @@ button:disabled {
   justify-content: center;
   align-items: center;
 }
+
 form {
   display: flex;
   flex-direction: column;
   width: 33%;
   margin-top: 20px;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 }
+
 input {
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 10px;
-  color: black;
+  color: #333;
   padding: 1rem;
   margin-bottom: 1rem;
+  transition: border-color 0.3s;
+}
+
+input:focus {
+  border-color: #6fb1fc;
+  outline: none;
 }
 
 .icon {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
 }
+
 select {
   padding: 0.5rem;
   border-radius: 0.5rem;
   border: 1px solid #ccc;
   width: 75%;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s;
+}
+
+select:focus {
+  border-color: #6fb1fc;
+  outline: none;
 }
 
 .text {
   text-align: justify;
+  color: #555;
 }
