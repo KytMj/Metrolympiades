@@ -13,6 +13,8 @@ const confirmPassword = ref('')
 const username = ref('')
 const teamName = ref('')
 
+const errorMessage = ref('')
+
 const boolean = computed(() => {
   return (
     !!email.value.trim() &&
@@ -45,10 +47,18 @@ function createAccount() {
   })
     .then((response) => response.json())
     .then((data) => {
-      localStorage.setItem('user', JSON.stringify(data))
-      router.push('leaderboard').then(() => {
-        location.reload()
-      })
+      if (data.message === "User already exists") {
+        errorMessage.value = "Cet utilisateur existe déjà.";
+        isLoading.value = false;
+      } else {
+        localStorage.setItem('user', JSON.stringify(data))
+        router.push('leaderboard').then(() => {
+          location.reload()
+        })
+        isLoading.value = false
+      }
+    }).catch(() => {
+      errorMessage.value = "Une erreur est survenue. Veuillez réessayer."
       isLoading.value = false
     })
 }
@@ -59,6 +69,7 @@ function createAccount() {
     <h1>Inscription</h1>
     <div class="container">
       <form class="card" @submit.prevent="createAccount">
+        <p v-if="errorMessage" style="color: red;">{{ errorMessage }}</p>
         <input
           type="text"
           id="username"
