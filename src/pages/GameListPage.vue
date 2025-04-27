@@ -99,7 +99,7 @@ function handleDelete(matchId) {
           <p>Chargement...</p>
         </div>
         <div v-else-if="matches.length === 0">
-          <p>Pas de encore de matchs avec cette équipe. Vous pouvez en créer un en appuyant sur "créer un match".</p>
+          <p>Pas de encore de matchs avec cette équipe. Vous pouvez en créer un en appuyant sur "Ajouter un match".</p>
         </div>
         <div v-else class="container columnDisplay">
           <MatchCard

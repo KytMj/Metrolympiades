@@ -52,7 +52,7 @@
 
 <template>
   <div class="container">
-    <form class="card">
+    <form class="card" @submit.prevent="">
       <div class="titleRow">
         <h1 class="pageTitle"> Mon équipe </h1>
         <button class="pageButton" @click="updateTeam">Enregistrer</button>
