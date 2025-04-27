@@ -1,6 +1,5 @@
 <script setup>
-  import { XMarkIcon } from '@heroicons/vue/24/solid'
-  import { PlusIcon } from '@heroicons/vue/24/solid';
+  import { XMarkIcon, PlusIcon } from '@heroicons/vue/24/solid'
   
   import { fetchMyTeam, updateMyTeam } from "@/utils/APIFetches";
   import { ref } from "vue";
@@ -53,7 +52,7 @@
 
 <template>
   <div class="container">
-    <form class="card" @submit.prevent="">
+    <form class="card">
       <div class="titleRow">
         <h1 class="pageTitle"> Mon équipe </h1>
         <button class="pageButton" @click="updateTeam">Enregistrer</button>
@@ -128,24 +127,5 @@
 
   .newMember{
     background-color: #386641 !important;
-  }
-
-  .writeInput:focus::-webkit-input-placeholder {
-	color : transparent;
-  }
-  .writeInput:focus::-moz-placeholder {
-    color : transparent;
-  }
-  .writeInput:-moz-placeholder {
-    color : transparent;
-  }
-  .writeInput:focus::-webkit-input-placeholder {
-    opacity : 0;
-  }
-  .writeInput:focus::-moz-placeholder {
-    opacity : 0;
-  }
-  .writeInput:-moz-placeholder {
-    opacity : 0;
   }
 </style>

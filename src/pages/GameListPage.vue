@@ -129,14 +129,4 @@ function handleDelete(matchId) {
     max-width: fit-content;
     max-height: fit-content;
   }
-  main {
-    margin: 50px;
-  }
-  .header {
-    margin-left: 400px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-  }
 </style>

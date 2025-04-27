@@ -67,7 +67,7 @@ fetchRanking()
     display: flex;
     flex-direction: row;
     justify-content: start;
-    align-items: left;
+    align-items: flex-start;
     width: 80%;
   }
   .card p {
